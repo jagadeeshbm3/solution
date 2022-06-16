@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Generate inputfile') {
             steps {
-                rm '/Users/jmokshar/solution/inputFile'
+                sh 'rm /Users/jmokshar/solution/inputFile'
                 sh '/Users/jmokshar/solution/gencsv.sh'
             }
         }
