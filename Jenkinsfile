@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Generate inputfile') {
             steps {
-                sh 'gencsv.sh'
+                sh '/Users/jmokshar/solution/gencsv.sh'
             }
         }
         stage('solution') {
