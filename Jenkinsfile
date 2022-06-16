@@ -11,13 +11,14 @@ pipeline {
         }
         stage('Generate inputfile') {
             steps {
+                rm '/Users/jmokshar/solution/inputFile'
                 sh '/Users/jmokshar/solution/gencsv.sh'
             }
         }
         stage('solution') {
             steps {
                 echo "PATH is: ${env.PATH}"
-                sh '/usr/local/bin/docker-compose up'
+                sh '/usr/local/bin/docker-compose up -d'
             }
         }
     }
