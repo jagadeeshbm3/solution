@@ -14,7 +14,7 @@ pipeline {
         }
         stage('solution') {
             steps {
-                PATH = '$PATH:/usr/local/bin'
+                sh 'cd /usr/local/bin'
                 sh '/usr/local/bin/docker-compose up'
             }
         }
