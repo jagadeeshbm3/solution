@@ -12,6 +12,11 @@ pipeline {
                 sh '/Users/jmokshar/solution/gencsv.sh'
             }
         }
+        stage('env') {
+            steps {
+                PATH = "$PATH:/usr/local/bin/docker-compose"
+            }
+        }
         stage('solution') {
             steps {
                 sh 'docker-compose up'
