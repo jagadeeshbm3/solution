@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        PATH = "/usr/local/bin:${env.PATH}"
+    }
     stages {
         stage('Git Checkout') {
             steps {
@@ -14,7 +16,7 @@ pipeline {
         }
         stage('solution') {
             steps {
-                sh 'cd /usr/local/bin'
+                echo "PATH is: ${env.PATH}"
                 sh '/usr/local/bin/docker-compose up'
             }
         }
