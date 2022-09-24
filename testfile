@@ -22,14 +22,20 @@ pipeline {
                    sh 'gencsv.sh'
             }
         }
-    post {
-        failure {
-            mail to: 'jagadeeshbm3@gmail.com',
-                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                 body: "Something is wrong with ${env.BUILD_URL}"
+        stage('post') {
+            failure {
+                mail to: 'jagadeeshbm3@gmail.com',
+                     subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                     body: "Something is wrong with ${env.BUILD_URL}"
 
             }
         }
 
     }
 }
+
+
+
+        
+        
+     
