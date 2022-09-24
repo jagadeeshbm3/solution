@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    triggers{
+        cron '@hourly'
+    }
+    options {
+        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
+        timeout(3)
+        timestamps
+    }
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/jagadeeshbm3/Assignment.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'echo "WORKSPACE = $WORKSPACE"'
+                   sh 'cd $WORKSPACE/solution'
+                   sh 'chmod 777 gencsv.sh'
+                   sh 'gencsv.sh'
+            }
+        }
+    }
+}
