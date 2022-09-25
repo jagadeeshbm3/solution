@@ -5,51 +5,18 @@ pipeline {
         timeout(3)
         timestamps()
     }
-    properties(
-        [
-            parameters([choice(choices: ['d', 'e'], description: '''DC to Switch to:
-            d = Chicago 
-            e = San-Jose''', name: 'DC'), string(description: 'Please add your user so we can track the swcitches ', name: 'RUN_BY'), choice(choices: [''], name: '')])
-        ]
-    )
-
-
-    stages {
-        stage('Git Checkout') {
-            steps {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github_key', url: 'https://github.com/jagadeeshbm3/Assignment.git']]])
-
-            }
-        }
-    }
-}
-
-
-
-pipeline {
-    agent any
-    options {
-        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
-        timeout(3)
-        timestamps()
-    }
     stages {
         stage('Setup parameters') {
             steps {
                 script { 
                     properties([
-                        parameters([
-                            choice(
-                                name: 'DC',
-                                choices: ['d', 'e'], description: '''DC to Switch to: d = Chicago e = San-Jose'''
-                                ), 
-                                string(description: 'Please add your user so we can track the swcitches ',
-                                name: 'RUN_BY'), choice(choices: [''], name: '')
-                                name: 'Reason',
-                                string(description: 'Please provide the reason to switch the service, so we can track the swcitches  '
-                                ), choice(choices: [''], name: ''
-                            )
-                        ])
+                        parameters {
+                            choice choices: ['d', 'e'], description: '''DC to Switch to:
+                            d = Chicago 
+                            e = San-Jose''', name: 'DC'
+                            string defaultValue: '', description: 'Please add your user so we can track the swcitches ', name: 'RUN_BY', trim: false
+                             extendedChoice description: 'ETP Product Services', multiSelectDelimiter: ',', name: 'PRODUCT', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_CHECKBOX', value: 'etp-reports,etp-passive,etp-intel,service.etp_intel,service.etp_eaadp_service,service.etp_notifications', visibleItemCount: 10
+                        }
                     ])
                 }
             }
