@@ -13,8 +13,11 @@ pipeline {
                         parameters([
                             choice(
                                 choices: ['d', 'e'], description: '''DC to Switch to: d = Chicago e = San-Jose''',
-                                name: 'DC'), string(description: 'Please add your user so we can track the swcitches ',
+                                name: 'DC'), 
+                                string(description: 'Please add your user so we can track the swcitches ',
                                 name: 'RUN_BY'), choice(choices: [''], name: ''
+                                string(description: 'Please provide the reason to switch the service, so we can track the swcitches  ',
+                                name: 'Reason'), choice(choices: [''], name: ''
                             )
                         ])
                     ])
