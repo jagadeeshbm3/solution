@@ -1,41 +1,25 @@
 pipeline {
     agent any
-    triggers{
-        cron '@hourly'
-    }
     options {
         buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
         timeout(3)
         timestamps()
     }
+    properties(
+        [
+            parameters([choice(choices: ['d', 'e'], description: '''DC to Switch to:
+            d = Chicago 
+            e = San-Jose''', name: 'DC'), string(description: 'Please add your user so we can track the swcitches ', name: 'RUN_BY'), choice(choices: [''], name: '')])
+        ]
+    )
+
+
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/jagadeeshbm3/Assignment.git'
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'echo "WORKSPACE = $WORKSPACE"'
-                   sh 'cd $WORKSPACE/solution'
-                   sh 'chmod 777 gencsv.sh'
-                   sh 'gencsv.sh'
-            }
-        }
-        stage('post') {
-            failure {
-                mail to: 'jagadeeshbm3@gmail.com',
-                     subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                     body: "Something is wrong with ${env.BUILD_URL}"
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github_key', url: 'https://github.com/jagadeeshbm3/Assignment.git']]])
 
             }
         }
-
     }
 }
-
-
-
-        
-        
-     
