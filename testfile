@@ -16,7 +16,7 @@ pipeline {
                                 name: 'DC'), 
                                 string(description: 'Please add your user so we can track the swcitches ',
                                 name: 'RUN_BY'), 
-                                choice(choices: [''], name: ''
+                               
                             )
                         ])
                         
