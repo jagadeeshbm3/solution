@@ -4,19 +4,22 @@ pipeline {
         buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
         timeout(3)
         timestamps()
-        option([choice(choices: ['d', 'e'], description: '''DC to Switch to:
-        d = Chicago
-        e = San-Jose''', name: 'DC'), string(description: 'Please add your user so we can track the swcitches ', name: 'RUN_BY'), choice(choices: [''], name: '')])
     }
-
-
-
     stages {
-        stage('Git Checkout') {
+        stage('Setup parameters') {
             steps {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github_key', url: 'https://github.com/jagadeeshbm3/Assignment.git']]])
-
+                script { 
+                    properties([
+                        parameters([
+                            choice(
+                                choices: ['d', 'e'], description: '''DC to Switch to: d = Chicago e = San-Jose''',
+                                name: 'DC'), string(description: 'Please add your user so we can track the swcitches ',
+                                name: 'RUN_BY'), choice(choices: [''], name: ''
+                            )
+                        ])
+                    ])
+                }
             }
         }
-    }
+    }   
 }
