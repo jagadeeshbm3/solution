@@ -21,7 +21,7 @@ pipeline {
                             d = Chicago 
                             e = San-Jose''', name: 'DC'
                             string defaultValue: '', description: 'Please add your user so we can track the swcitches ', name: 'RUN_BY', trim: false
-                             extendedChoice description: 'ETP Product Services', multiSelectDelimiter: ',', name: 'PRODUCT', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_CHECKBOX', value: 'etp-reports,etp-passive,etp-intel,service.etp_intel,service.etp_eaadp_service,service.etp_notifications', visibleItemCount: 10
+                            extendedChoice description: 'ETP Product Services', multiSelectDelimiter: ',', name: 'PRODUCT', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_CHECKBOX', value: 'etp-reports,etp-passive,etp-intel,service.etp_intel,service.etp_eaadp_service,service.etp_notifications', visibleItemCount: 10
                         }
                     ])
                 }
