@@ -4,14 +4,11 @@ pipeline {
         buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
         timeout(3)
         timestamps()
+        categories:([choice(choices: ['d', 'e'], description: '''DC to Switch to:
+        d = Chicago
+        e = San-Jose''', name: 'DC'), string(description: 'Please add your user so we can track the swcitches ', name: 'RUN_BY'), choice(choices: [''], name: '')
     }
-    options(
-        [
-            categories:([choice(choices: ['d', 'e'], description: '''DC to Switch to:
-            d = Chicago 
-            e = San-Jose''', name: 'DC'), string(description: 'Please add your user so we can track the swcitches ', name: 'RUN_BY'), choice(choices: [''], name: '')])
-        ]
-    )
+
 
 
     stages {
